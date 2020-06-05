@@ -20,16 +20,44 @@ public class AccountRealm extends AuthorizingRealm {
     JwtUtils jwtUtils;
     @Autowired
     UserService userService;
+
+    /**
+     * @Description: 为了让realm支持jwt的凭证校验
+     * @param: [token]
+     * @return: boolean
+     * @Author: yaoyp
+     * @date: 2020/6/3 0003
+     */
     @Override
     public boolean supports(AuthenticationToken token) {
         return token instanceof JwtToken;
     }
+
+    /**
+     * @Description: 权限校验
+     * @param: [principals]
+     * @return: org.apache.shiro.authz.AuthorizationInfo
+     * @Author: yaoyp
+     * @date: 2020/6/3 0003
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+
+
         return null;
     }
+
+    /**
+     * @Description: 登录认证校验
+     * @param: [token]
+     * @return: org.apache.shiro.authc.AuthenticationInfo
+     * @Author: yaoyp
+     * @date: 2020/6/3 0003
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+
+
         JwtToken jwt = (JwtToken) token;
         log.info("jwt----------------->{}", jwt);
         String userId = jwtUtils.getClaimByToken((String) jwt.getPrincipal()).getSubject();
